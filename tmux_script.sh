@@ -1,12 +1,4 @@
 #!/bin/sh
-#
-# Setup a work space called `work` with two windows
-# first window has 3 panes. 
-# The first pane set at 65%, split horizontally, set to api root and running vim
-# pane 2 is split at 25% and running redis-server 
-# pane 3 is set to api root and bash prompt.
-# note: `api` aliased to `cd ~/path/to/work`
-#
 echo "Hola Isard, posa el nom de la sessió:"
 read session
 
