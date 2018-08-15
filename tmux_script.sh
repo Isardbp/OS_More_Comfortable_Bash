@@ -26,25 +26,48 @@ case "$session" in
 		tmux attach-session -t $session
 	;;
 	Mysql)
+		echo "User: "
+		read user
 		# create a new tmux session, starting vim from a saved session in the new window
 		tmux new-session -d -s $session -n mysql
+		echo "ip?"
+		read ip
 
-		# Select pane 1, start mysql and run mysql
-		tmux selectp -t 1 
-		tmux send-keys "systemctl start mysqld.service;mysql -u root -p" C-m 
+		if [ $ip == no ];then
+			echo "Start mydqld service?"
+			read desition
+			if [ $desition == yes ]; then 
+				tmux send-keys "systemctl start mysqld.service;mysql -u $user -p" C-m 
+			else	
+				tmux send-keys "mysql -u $user -p" C-m
+			fi
+		else
 
-		# Finished setup, attach to the tmux session!
+			echo "Start mydqld service?"
+			read desition
+			if [ $desition == yes ]; then 
+				tmux send-keys "systemctl start mysqld.service;mysql -u $user -h $ip -p" C-m 
+			else	
+				tmux send-keys "mysql -u $user -h $ip -p" C-m
+			fi
+		fi
+		#Finished setup, attach to the tmux session!
 		tmux attach-session -t $session
 	;;
 	ssh)
+		echo "ip: "
+		read ip
 		# create a new tmux session, starting vim from a saved session in the new window
 		tmux new-session -d -s $session -n ssh
 
-		# Select pane 1, start ssh and run ssh
-		tmux selectp -t 1 
-		tmux send-keys "systemctl start sshd; ssh 127.0.0.1" C-m 
-
-		# Finished setup, attach to the tmux session!
+		echo "Start sshd service?"
+		read desition
+		if [ $desition == yes ]; then 
+			tmux send-keys "systemctl start sshd; ssh $ip" C-m 
+		else
+			tmux send-keys "ssh $ip" C-m
+		fi
+		#Finished setup, attach to the tmux session!
 		tmux attach-session -t $session
 	;;
 	*)
