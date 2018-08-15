@@ -5,25 +5,37 @@ read session
 
 case "$session" in
 	Java)
-		# create a new tmux session, starting vim from a saved session in the new window
-		tmux new-session -d -s $session -n vim #"vim -S ~/.vim/sessions/kittybusiness"
+		echo "laptop or pc?"
+		read desition
+		if [ $desition == laptop ];then
+			# create a new tmux session, starting vim from a saved session in the new window
+			tmux new-session -d -s $session -n vim #"vim -S ~/.vim/sessions/kittybusiness"
 
-		# Select pane 1, set dir to api, run vim
-		tmux selectp -t 1 
-		tmux send-keys "cd /home/isardbp/git;vim" C-m 
+			# Select pane 1, set dir to api, run vim
+			tmux selectp -t 1 
+			tmux send-keys "cd /home/isardbp/git;vim" C-m 
 
-		# Split pane 1 vertical, start tree 
-		tmux splitw -v -p 10
-		tmux send-keys "cd /home/isardbp/git;clear;tree -L 2" C-m 
+			# Split pane 1 vertical, start tree 
+			tmux splitw -v -p 10
+			tmux send-keys "cd /home/isardbp/git;clear;tree -L 2" C-m 
 
-		# Select pane 2 
-		#tmux selectp -t 2
+			# Finished setup, attach to the tmux session!
+			tmux attach-session -t $session
+		else
+			# create a new tmux session, starting vim from a saved session in the new window
+			tmux new-session -d -s $session -n vim #"vim -S ~/.vim/sessions/kittybusiness"
 
-		# Select pane 1
-		#tmux selectp -t 1
+			# Select pane 1, set dir to api, run vim
+			tmux selectp -t 1 
+			tmux send-keys "cd /home/isardbp/git;vim" C-m 
 
-		# Finished setup, attach to the tmux session!
-		tmux attach-session -t $session
+			# Split pane 1 horizontal, start tree 
+			tmux splitw -h -p 10
+			tmux send-keys "cd /home/isardbp/git;clear;tree -L 2" C-m 
+
+			# Finished setup, attach to the tmux session!
+			tmux attach-session -t $session
+		fi
 	;;
 	Mysql)
 		echo "User: "
