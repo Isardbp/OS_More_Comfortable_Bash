@@ -2,35 +2,31 @@
 
 cd /home/isardbp/git
 
-echo "add, commit and push all?"
+echo "pull or push?"
 read desition
 
-if [ $desition == yes ]; then
-	git add *
-	echo "commit message: "
-	read comm_mss
-	git commit -m "$comm_mss"
-	git push origin master
-else
-	tree -L 1
-	for i in $(ls);
-	do
-		echo "------------$i----------------"
+if [ $desition == pull ]; then
+	for i in $(ls /home/isardbp/git); do
+		echo "-------------$i--------------"
 		cd /home/isardbp/git/$i
-		git status
+		git pull
 	done
-	echo "Repository:"
-	read repo
-	cd $repo
-	echo "commit message: "
-	read comm_mss
-	git commit -m "$comm_mss"
-	echo "Push origin master?"
+elif [ $desition == push ]; then
+	echo "Push all or only one?"
 	read desition
-	if [ $desition == yes ]; then
-		git push origin master
+	if [ $desition == all ]; then
+		
+		echo "Put a global commit message like: general commit"
+		read comm_mss
+		for i in $(ls /home/isardbp/git); do
+			cd /home/isardbp/git/$i
+			git add *
+			git commit -m "$comm_mss"
+			git push origin master
+		done
 	else
 		exit 0
 	fi
-fi
-
+else
+	exit 0
+fi	
