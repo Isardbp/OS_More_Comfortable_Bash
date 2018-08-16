@@ -29,7 +29,7 @@ elif [ $desition == push ]; then
 		echo "Escull un dir: "
 		read dir
 		cd /home/isardbp/git/$dir
-		echo "Put a global commit message like: general commit"
+		echo "Commit message:"
 		read comm_mss
 		git add *
 		git commit -m "$comm_mss"
