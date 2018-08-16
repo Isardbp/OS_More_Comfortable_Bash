@@ -24,6 +24,16 @@ elif [ $desition == push ]; then
 			git commit -m "$comm_mss"
 			git push origin master
 		done
+	elif [ $desition == one ]; then
+		tree -L 1 /home/isardbp/git
+		echo "Escull un dir: "
+		read dir
+		cd /home/isardbp/git/$dir
+		echo "Put a global commit message like: general commit"
+		read comm_mss
+		git add *
+		git commit -m "$comm_mss"
+		git push origin master
 	else
 		exit 0
 	fi
